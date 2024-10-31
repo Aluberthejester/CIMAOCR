@@ -1,0 +1,73 @@
+{% load compress %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="{% static 'node_modules/flowbite/dist/flowbite.min.js' %}"></script>
+    {% compress css %}
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% endcompress %}
+</head>
+<body class="antialiased">
+    {% block content %}
+
+    {% include 'navigation.html' %}
+    
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-6">Búsqueda General</h1>
+        
+        <!-- Barra de búsqueda -->
+        <div class="flex justify-center mb-6">
+            <form method="GET" action="{% url 'busqueda_g' %}" class="w-3/4 md:w-1/2 lg:w-1/3 flex">
+                <input type="text" name="q" placeholder="Buscar archivo..." value="{{ query }}" class="form-control rounded-l-lg w-full" />
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 flex items-center justify-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                <span>Buscar</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Mostrar todos los registros de la tabla ResultadosOCR -->
+        <div class="container mx-auto py-8">
+            <h2 class="text-2xl font-semibold text-gray-900 mt-8 text-center">Resultados</h2>
+            <div class="overflow-x-auto mt-6">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Nombre del Archivo</th>
+                            <th scope="col" class="px-6 py-3">Descripción</th>
+                            <th scope="col" class="px-6 py-3">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800">
+                        {% for resultado in resultados %}
+                        <tr class="border-b dark:border-gray-700">
+                            <td class="px-6 py-4">{{ resultado.nombre_archivo }}</td>
+                            <td class="px-6 py-4">{{ resultado.descripcion }}</td>
+                            <td class="px-6 py-4">
+                                <a href="{% url 'ver_ocr' resultado.id %}" class="flex justify-content-center items-center text-blue-600 hover:underline">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endblock content %}
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+</body>
+</html>

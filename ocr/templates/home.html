@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal - CIMA UATF</title>
+    <!-- Tailwind CSS -->
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Flowbite JS -->
+    <script src="{% static 'node_modules/flowbite/dist/flowbite.min.js' %}"></script>
+</head>
+
+<body class="bg-gray-100">
+    
+    <!-- Incluir barra de navegación -->
+    {% include 'navigation.html' %}
+
+    <div class="container mx-auto py-8">
+        <!-- Encabezado principal -->
+        <h1 class="text-4xl font-bold text-center text-gray-900 mb-6">Bienvenido al portal web de digitalización del Centro de Investigación Minero Ambiental <span class="text-blue-600">CIMA-UATF</span></h1>
+
+        <!-- Imagen Mayra.png -->
+        <div class="text-center mb-8">
+            <img class="w-64 mx-auto" src="{% static 'letrero.jpg' %}" alt="Imagen de Bienvenida">
+        </div>
+
+        <!-- Párrafo 1 -->
+        <p class="text-lg font-semibold text-gray-700 mb-6">
+            El <span class="font-bold">Centro de Investigación Minero Ambiental CIMA-UATF</span> ofrece servicios especializados en análisis de <span class="font-bold">agua</span>, <span class="font-bold">suelos</span>, <span class="font-bold">sedimentos</span>, <span class="font-bold">salmueras</span> y <span class="font-bold">polvos partículas</span>.
+        </p>
+
+        <!-- Párrafo 2 -->
+        <p class="text-lg font-semibold text-gray-700 mb-6">
+            Además, realizamos muestreos de <span class="font-bold">agua</span>, <span class="font-bold">suelo</span> y <span class="font-bold">sedimentos</span> para garantizar resultados precisos y confiables en nuestras investigaciones.
+        </p>
+
+        <!-- Imagen Polvo.jpg -->
+        <div class="text-center mb-8">
+            <img class="w-64 mx-auto" src="{% static 'Polvo.jpg' %}" alt="Muestreos">
+        </div>
+
+        <!-- Párrafo 3 - Descripción del programa OCR y digitalización -->
+        <p class="text-lg font-semibold text-gray-700 mb-6">
+            Este portal web ofrece una plataforma para la <span class="font-bold">digitalización</span> de documentos utilizando la tecnología OCR (Reconocimiento Óptico de Caracteres), que permite extraer texto de imágenes escaneadas. Este proceso es fundamental para automatizar la gestión y almacenamiento de documentos en el Centro de Investigación Minero Ambiental <span class="font-bold">CIMA-UATF</span>.
+        </p>
+
+        <!-- Imagen Ruido.jpg -->
+        <div class="text-center">
+            <img class="w-64 mx-auto" src="{% static 'Ruido.jpg' %}" alt="Proceso OCR y Digitalización">
+        </div>
+
+        <!-- Botón para acceder a la funcionalidad de OCR -->
+        <div class="text-center mt-10">
+            <a href="{% url 'ocr' %}" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Comenzar Digitalización OCR</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+</body>
+
+</html>

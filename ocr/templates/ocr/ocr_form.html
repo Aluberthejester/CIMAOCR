@@ -1,0 +1,80 @@
+{% load compress %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="{% static 'node_modules/flowbite/dist/flowbite.min.js' %}"></script>
+    {% compress css %}
+        <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% endcompress %}
+</head>
+<body class="antialiased">
+    {% block content %}
+
+    {% include 'navigation.html' %}
+    
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-6">Formulario OCR</h1>
+        
+        <!-- Formulario para subir imágenes con estilos mejorados -->
+        <form method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-lg shadow-md max-w-md mx-auto">
+            {% csrf_token %}
+            
+            <!-- Campo de Nombre de Archivo -->
+            <div class="mb-1">
+                <label for="nombre_archivo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de Archivo</label>
+                {{ form.nombre_archivo|add_class:"block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500" }}
+            </div>
+            
+            <!-- Campo de Descripción -->
+            <div class="mb-1">
+                <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
+                {{ form.descripcion|add_class:"block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500" }}
+            </div>
+
+            <!-- Campo de Número de Páginas -->
+            <div class="mb-1">
+                <label for="npaginas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Número de Páginas</label>
+                {{ form.npaginas|add_class:"block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500" }}
+            </div>
+            
+            <!-- Campo de Fecha de recepcion o envio -->
+            <div class="mb-1">
+                <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha</label>
+                {{ form.fecha|add_class:"block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500" }}
+            </div>
+
+            <!-- Campo de Categoría -->
+            <div class="mb-1">
+                <label for="categoria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoría</label>
+                {{ form.categoria|add_class:"block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500" }}
+            </div>
+
+            <!-- Campo de Subir Imágenes -->
+            <div class="mb-1">
+                <label for="imagenes" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subir Imágenes</label>
+                <input type="file" name="imagenes" multiple accept="image/*" class="block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <!-- Botón para Digitalizar -->
+            <div class="text-center">
+                <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center justify-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                        <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5" />
+                        <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z" />
+                    </svg>
+                    <span>Digitalizar</span>
+                </button>
+            </div>
+        </form>          
+    </div>
+    {% endblock content %}
+    
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+</body>
+</html>

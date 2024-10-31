@@ -1,0 +1,83 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Texto Extraído</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            CKEDITOR.replace('id_texto_extraido');
+        });
+    </script>
+    <style>
+        .full-width-height {
+            width: 100%;
+            height: 400px;
+            resize: none;
+        }
+        .cke_contents {
+            max-width: 100% !important;
+            min-width: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto py-5 max-w-lg">
+        <h1 class="text-center text-3xl font-bold mb-6">Editar Texto Extraído</h1>
+
+        <!-- Formulario para editar el texto extraído -->
+        <form method="POST" class="bg-white p-8 rounded-lg shadow-md w-full">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="texto_extraido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Texto Extraído</label>
+                {{ form.texto_extraido|add_class:"full-width-height" }}
+                {% if read_only %}
+                    <p class="text-red-600 mt-2">* No tienes permiso para editar el texto.</p>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            document.getElementById("id_texto_extraido").setAttribute("readonly", "readonly");
+                        });
+                    </script>
+                {% endif %}
+            </div>
+            
+            <!-- Botón para Guardar (disponible para todos) -->
+            <div class="text-center">
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
+                        <path d="M11 2H9v3h2z"/>
+                        <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
+                    </svg>
+                    <span>Guardar</span>
+                </button>
+            </div>
+        </form>
+
+        <h2 class="text-center text-2xl font-bold mt-8">Imágenes Procesadas</h2>
+        <div class="row mt-4">
+            {% for imagen in imagenes %}
+                <div class="col-md-4 mb-4">
+                    <img src="{{ imagen.imagen.url }}" alt="Imagen OCR" class="img-fluid rounded shadow-sm" width="300">
+                </div>
+            {% endfor %}
+        </div>
+
+        <h2 class="text-center text-2xl font-bold mt-8">Añadir Nueva Imagen</h2>
+        <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto mt-4">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="nueva_imagen" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subir Nueva Imagen</label>
+                <input type="file" name="nueva_imagen" accept="image/*" required class="block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Añadir imagen y procesar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
